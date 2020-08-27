@@ -1,5 +1,5 @@
 {
-  "name": "log-on",
+  "name": "named-logs",
   "version": "0.0.1",
   "description": "minimal logging facet for libraries",
   "main": "./lib/cjs/index.js",
@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:wighawag/log-on.git"
+    "url": "git+ssh://git@github.com:wighawag/named-logs.git"
   },
   "dependencies": {},
   "devDependencies": {
