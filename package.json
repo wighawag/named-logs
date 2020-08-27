@@ -9,7 +9,7 @@
     "lib/"
   ],
   "scripts": {
-    "postinstall": "npm run build",
+    "prepare": "npm run build",
     "dev": "tsc -w -p tsconfig.json",
     "build": "tsc -p tsconfig.json && terser lib/esm/index.js -o lib/esm/index.js && tsc -p tsconfig-cjs.json && terser lib/cjs/index.js -o lib/cjs/index.js && tsc -p tsconfig-umd.json && terser lib/umd/index.js -o lib/umd/index.js",
     "prepublishOnly": "npm run build",
