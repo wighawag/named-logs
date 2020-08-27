@@ -1,4 +1,4 @@
-type Logger = {
+export type Logger = {
   assert(condition?: boolean, ...data: any[]): void;
   debug(...data: any[]): void;
   error(...data: any[]): void;
