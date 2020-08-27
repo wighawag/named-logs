@@ -1,0 +1,38 @@
+{
+  "name": "log-on",
+  "version": "0.0.1",
+  "description": "minimal logging facet for libraries",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "browser": "./lib/umd/index.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "postinstall": "npm run build",
+    "dev": "tsc -w -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && terser lib/esm/index.js -o lib/esm/index.js && tsc -p tsconfig-cjs.json && terser lib/cjs/index.js -o lib/cjs/index.js && tsc -p tsconfig-umd.json && terser lib/umd/index.js -o lib/umd/index.js",
+    "prepublishOnly": "npm run build",
+    "test": "mocha anylogger.spec.js"
+  },
+  "author": "Ronan Sandford",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:wighawag/log-on.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "terser": "^5.2.1",
+    "typescript": "^3.8.3"
+  },
+  "keywords": [
+    "console",
+    "logger",
+    "logging",
+    "logging facade",
+    "microscopically small",
+    "tiny",
+    "1kB"
+  ]
+}
