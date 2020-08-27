@@ -1,6 +1,6 @@
 {
   "name": "named-logs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "minimal logging facet for libraries",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
