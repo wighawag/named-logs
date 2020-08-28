@@ -1,13 +1,13 @@
 export type Logger = {
-  assert(condition?: boolean, ...data: any[]): void;
-  error(...data: any[]): void;
-  warn(...data: any[]): void;
-  info(...data: any[]): void;
-  log(...data: any[]): void;
-  debug(...data: any[]): void;
-  dir(item?: any, options?: any): void;
-  table(tabularData?: any, properties?: string[]): void;
-  trace(...data: any[]): void;
+  readonly assert: (condition?: boolean, ...data: any[]) => void;
+  readonly error: (...data: any[]) => void;
+  readonly warn: (...data: any[]) => void;
+  readonly info: (...data: any[]) => void;
+  readonly log: (...data: any[]) => void;
+  readonly debug: (...data: any[]) => void;
+  readonly dir: (item?: any, options?: any) => void;
+  readonly table: (tabularData?: any, properties?: string[]) => void;
+  readonly trace: (...data: any[]) => void;
 };
 type LoggerFactory = (namespace: string) => Logger;
 const noop = () => undefined;
