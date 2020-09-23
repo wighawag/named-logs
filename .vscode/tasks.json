@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+			"label": "npm: build",
+			"detail": "tsc -p tsconfig.json && terser lib/esm/index.js -c -m -o lib/esm/index.js && tsc -p tsconfig-cjs.json && terser lib/cjs/index.js -c -m -o lib/cjs/index.js && tsc -p tsconfig-umd.json && terser lib/umd/index.js -c -m -o lib/umd/index.js"
+		}
+	]
+}

@@ -1,6 +1,6 @@
 {
   "name": "named-logs",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "minimal logging facet for libraries",
   "main": "./lib/umd/index.js",
   "module": "./lib/esm/index.js",
