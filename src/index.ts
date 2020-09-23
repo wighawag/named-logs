@@ -22,10 +22,10 @@ const noopLogger = {
   table: noop,
   trace: noop
 };
-const f : {f: LoggerFactory} = {f: () => noopLogger};
+let func: LoggerFactory;
 export function hook(factory: LoggerFactory) {
-  f.f = factory;
+  func = factory;
 }
 export function logs(namespace: string): Logger {
-  return f.f(namespace)
+  return (func && func(namespace)) || noopLogger
 }
