@@ -24,7 +24,7 @@ const noopLogger = {
 };
 let func: LoggerFactory = () => noopLogger;
 export function hook(factory: LoggerFactory) {
-  func = factory;
+  try{func = factory;}catch(e){} // try to prevent tree shaking
 }
 export function logs(namespace: string): Logger {
   return func(namespace)
