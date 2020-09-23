@@ -21,7 +21,8 @@ If you use a logging library that support `named-logs` you might not need to do 
 For example, with [named-logs-console](https://github.com/wighawag/named-logs-console#readme) you can simply do in your root file (index.js)
 
 ```js
-import 'named-logs-console';
+import {hookup} from 'named-logs-console';
+hookup();
 ```
 
 And now any library that use `named-logs` will have their log outputted to console but with full control on the app side. See [named-logs-console](https://github.com/wighawag/named-logs-console#readme) for more details.
