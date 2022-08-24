@@ -8,6 +8,7 @@ export type Logger = {
   readonly dir: (item?: any, options?: any) => void;
   readonly table: (tabularData?: any, properties?: string[]) => void;
   readonly trace: (...data: any[]) => void;
+  readonly write: (msg: string) => void;
 };
 type LoggerFactory = (namespace: string) => Logger;
 const noop = () => undefined;
@@ -21,6 +22,7 @@ const noopLogger = {
   dir: noop,
   table: noop,
   trace: noop,
+  write: noop,
 };
 declare let global: {_logFactory?: LoggerFactory};
 if (typeof window !== 'undefined') {
