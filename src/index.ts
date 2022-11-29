@@ -24,13 +24,10 @@ const noopLogger = {
   trace: noop,
   write: noop,
 };
-declare let global: {_logFactory?: LoggerFactory};
-if (typeof window !== 'undefined') {
-  (window as any).global = window;
-}
+
 export function hook(factory: LoggerFactory) {
-  global._logFactory = factory;
+  (globalThis as any)._logFactory = factory;
 }
 export function logs(namespace: string): Logger {
-  return (global._logFactory && global._logFactory(namespace)) || noopLogger;
+  return (globalThis as any)._logFactory ? (globalThis as any)._logFactory(namespace) : noopLogger;
 }
