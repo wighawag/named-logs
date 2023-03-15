@@ -9,6 +9,9 @@ export declare type Logger = {
     readonly table: (tabularData?: any, properties?: string[]) => void;
     readonly trace: (...data: any[]) => void;
     readonly write: (msg: string) => void;
+    readonly time: (label: string) => void;
+    readonly timeEnd: (label: string) => void;
+    readonly timeLog: (label?: string) => void;
 };
 declare type LoggerFactory = (namespace: string) => Logger;
 export declare function hook(factory: LoggerFactory): void;

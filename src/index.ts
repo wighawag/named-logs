@@ -9,6 +9,9 @@ export type Logger = {
   readonly table: (tabularData?: any, properties?: string[]) => void;
   readonly trace: (...data: any[]) => void;
   readonly write: (msg: string) => void;
+  readonly time: (label: string) => void;
+  readonly timeEnd: (label: string) => void;
+  readonly timeLog: (label?: string) => void;
 };
 type LoggerFactory = (namespace: string) => Logger;
 const noop = () => undefined;
@@ -23,6 +26,9 @@ const noopLogger = {
   table: noop,
   trace: noop,
   write: noop,
+  time: noop,
+  timeEnd: noop,
+  timeLog: noop,
 };
 
 export function hook(factory: LoggerFactory) {
