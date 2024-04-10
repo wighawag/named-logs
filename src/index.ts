@@ -31,9 +31,18 @@ const noopLogger = {
   timeLog: noop,
 };
 
+let _factory: LoggerFactory | undefined;
 export function hook(factory: LoggerFactory) {
-  (globalThis as any)._logFactory = factory;
+  if (typeof globalThis !== 'undefined') {
+    (globalThis as any)._logFactory = factory;
+  } else {
+    _factory = factory;
+  }
 }
 export function logs(namespace: string): Logger {
-  return (globalThis as any)._logFactory ? (globalThis as any)._logFactory(namespace) : noopLogger;
+  return _factory
+    ? _factory(namespace)
+    : (globalThis as any)._logFactory
+      ? (globalThis as any)._logFactory(namespace)
+      : noopLogger;
 }
