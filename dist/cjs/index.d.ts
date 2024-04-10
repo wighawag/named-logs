@@ -1,4 +1,4 @@
-export declare type Logger = {
+export type Logger = {
     readonly assert: (condition?: boolean, ...data: any[]) => void;
     readonly error: (...data: any[]) => void;
     readonly warn: (...data: any[]) => void;
@@ -13,7 +13,7 @@ export declare type Logger = {
     readonly timeEnd: (label: string) => void;
     readonly timeLog: (label?: string) => void;
 };
-declare type LoggerFactory = (namespace: string) => Logger;
+type LoggerFactory = (namespace: string) => Logger;
 export declare function hook(factory: LoggerFactory): void;
 export declare function logs(namespace: string): Logger;
 export {};
