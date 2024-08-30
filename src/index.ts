@@ -14,6 +14,7 @@ export type Logger = {
   readonly timeLog: (label?: string) => void;
 };
 type LoggerFactory = (namespace: string) => Logger;
+
 const noop = () => undefined;
 const noopLogger = {
   assert: noop,
@@ -31,6 +32,18 @@ const noopLogger = {
   timeLog: noop,
 };
 
+let proxies: {[namespace: string]: Logger};
+let target: Logger | undefined;
+
+function createProxy() {
+  const proxy: Logger = new Proxy(noopLogger, {
+    get(t, p, r) {
+      return ((target || t) as any)[p];
+    },
+  });
+  return proxy;
+}
+
 let _factory: LoggerFactory | undefined;
 export function hook(factory: LoggerFactory) {
   if (typeof globalThis !== 'undefined') {
@@ -40,9 +53,9 @@ export function hook(factory: LoggerFactory) {
   }
 }
 export function logs(namespace: string): Logger {
-  return _factory
-    ? _factory(namespace)
-    : (globalThis as any)._logFactory
-      ? (globalThis as any)._logFactory(namespace)
-      : noopLogger;
+  let logger = proxies[namespace];
+  if (!logger) {
+    logger = proxies[namespace] = createProxy();
+  }
+  return logger;
 }
