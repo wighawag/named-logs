@@ -35,14 +35,46 @@ let _factory: LoggerFactory | undefined;
 export function hook(factory: LoggerFactory) {
   if (typeof globalThis !== 'undefined') {
     (globalThis as any)._logFactory = factory;
-  } else {
-    _factory = factory;
   }
+  _factory = factory;
 }
-export function logs(namespace: string): Logger {
-  return _factory
-    ? _factory(namespace)
-    : (globalThis as any)._logFactory
-      ? (globalThis as any)._logFactory(namespace)
+
+const fallbackFactory: LoggerFactory = (namespace: string) => {
+  let trueLogger: Logger | undefined;
+  const logger = new Proxy(
+    {},
+    {
+      get(target: {}, prop: string, receiver: {}) {
+        if (trueLogger) {
+          return (trueLogger as any)[prop];
+        }
+        const factory = _getFactory();
+        if (factory) {
+          trueLogger = factory(namespace);
+          return (trueLogger as any)[prop];
+        }
+        return noop;
+      },
+    }
+  ) as Logger;
+  return logger;
+};
+
+function _getFactory(): LoggerFactory | undefined {
+  return _factory || (globalThis as any)?._logFactory;
+}
+
+export function logs(namespace: string, options?: {fallbackOnProxy?: boolean | string}): Logger {
+  const factory = _getFactory();
+  return factory
+    ? factory(namespace)
+    : options?.fallbackOnProxy
+      ? typeof options.fallbackOnProxy == 'boolean'
+        ? fallbackFactory(namespace)
+        : typeof options.fallbackOnProxy == 'string'
+          ? typeof process !== 'undefined' && process?.env[options.fallbackOnProxy]
+            ? fallbackFactory(namespace)
+            : noopLogger
+          : noopLogger
       : noopLogger;
 }
