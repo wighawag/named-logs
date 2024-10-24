@@ -15,6 +15,8 @@ export type Logger = {
 };
 type LoggerFactory = (namespace: string) => Logger;
 export declare function hook(factory: LoggerFactory): void;
-export declare function logs(namespace: string): Logger;
+export declare function logs(namespace: string, options?: {
+    fallbackOnProxy?: boolean | string;
+}): Logger;
 export {};
 //# sourceMappingURL=index.d.ts.map

@@ -70,7 +70,9 @@ export function logs(namespace: string, options?: {fallbackOnProxy?: boolean | s
     ? factory(namespace)
     : options?.fallbackOnProxy
       ? typeof options.fallbackOnProxy == 'boolean'
-        ? fallbackFactory(namespace)
+        ? options.fallbackOnProxy
+          ? fallbackFactory(namespace)
+          : noopLogger
         : typeof options.fallbackOnProxy == 'string'
           ? typeof process !== 'undefined' && process?.env[options.fallbackOnProxy]
             ? fallbackFactory(namespace)
