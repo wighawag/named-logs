@@ -13,7 +13,11 @@ export type Logger = {
   readonly timeEnd: (label: string) => void;
   readonly timeLog: (label?: string) => void;
 };
-type LoggerFactory = (namespace: string) => Logger;
+
+export type TypedLogger<LoggerType extends Logger> = LoggerType;
+
+type LoggerFactory<LoggerType extends Logger = Logger> = (namespace: string) => TypedLogger<LoggerType>;
+
 const noop = () => undefined;
 const noopLogger = {
   assert: noop,
