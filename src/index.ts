@@ -16,7 +16,7 @@ export type Logger = {
 
 export type TypedLogger<LoggerType extends Logger> = LoggerType;
 
-type LoggerFactory<LoggerType extends Logger = Logger> = (namespace: string) => TypedLogger<LoggerType>;
+type LoggerFactory = <LoggerType extends Logger = Logger>(namespace: string) => TypedLogger<LoggerType>;
 
 const noop = () => undefined;
 const noopLogger = {
@@ -43,7 +43,7 @@ export function hook(factory: LoggerFactory) {
   _factory = factory;
 }
 
-const fallbackFactory: LoggerFactory = (namespace: string) => {
+const fallbackFactory: LoggerFactory = <Logger>(namespace: string) => {
   let trueLogger: Logger | undefined;
   const logger = new Proxy(
     {},
@@ -54,7 +54,7 @@ const fallbackFactory: LoggerFactory = (namespace: string) => {
         }
         const factory = _getFactory();
         if (factory) {
-          trueLogger = factory(namespace);
+          trueLogger = <Logger>factory(namespace);
           return (trueLogger as any)[prop];
         }
         return noop;
