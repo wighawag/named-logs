@@ -14,6 +14,13 @@ console.log('whatever you want');
 console.error('an error occured');
 ```
 
+you can also add a decoration option which log renderer can use to add color, etc.. it expect a css string
+
+```js
+import {logs} from 'named-logs';
+const console = logs('yourLibraryName', 'background: #222; color: #bada55');
+```
+
 # use in application
 
 If you use a logging library that support `named-logs` you might not need to do anything else, except importing that lib that will call hook by itself.
@@ -31,14 +38,18 @@ You can also use `named-logs` for making the logging calls, this way part of you
 
 # `named-logs` is a facade
 
-`named-logs` basically act as a minimal facade for logging with minimal overhead while remaining flexible. Perfect for libraries that want to remain agnostic to the logging method used. the esm module weight less than 219 bytes.
+`named-logs` basically act as a minimal facade for logging with minimal overhead while remaining flexible. Perfect for libraries that want to remain agnostic to the logging method used. the esm module weight less than 926 bytes.
 
 you can build your own handler, by doing the following:
+
 ```js
 import {hook} from 'named-logs';
 hook((namespace) => {
-    return window.console;
+  return window.console;
 });
 ```
+
 This is a simple example that will make all log use `window.console`.
 namespace will not be used here though. see [named-logs-console](https://github.com/wighawag/named-logs-console#readme) for a logger that supprt `window.console` with namespace/log level filtering.
+
+to have it working with bundler the best way is to inject a script tag, see https://github.com/wighawag/named-logs-console#readme

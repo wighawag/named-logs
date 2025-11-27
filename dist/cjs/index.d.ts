@@ -14,10 +14,13 @@ export type Logger = {
     readonly timeLog: (label?: string) => void;
 };
 export type TypedLogger<LoggerType extends Logger> = LoggerType;
-type LoggerFactory = <LoggerType extends Logger = Logger>(namespace: string) => TypedLogger<LoggerType>;
+type LoggerFactory = <LoggerType extends Logger = Logger>(namespace: string, options?: {
+    decoration?: string;
+}) => TypedLogger<LoggerType>;
 export declare function hook(factory: LoggerFactory): void;
 export declare function logs(namespace: string, options?: {
     fallbackOnProxy?: boolean | string;
+    decoration: string;
 }): Logger;
 export {};
 //# sourceMappingURL=index.d.ts.map

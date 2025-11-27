@@ -16,7 +16,10 @@ export type Logger = {
 
 export type TypedLogger<LoggerType extends Logger> = LoggerType;
 
-type LoggerFactory = <LoggerType extends Logger = Logger>(namespace: string) => TypedLogger<LoggerType>;
+type LoggerFactory = <LoggerType extends Logger = Logger>(
+  namespace: string,
+  options?: {decoration?: string}
+) => TypedLogger<LoggerType>;
 
 const noop = () => undefined;
 const noopLogger = {
@@ -68,10 +71,10 @@ function _getFactory(): LoggerFactory | undefined {
   return _factory || (globalThis as any)?._logFactory;
 }
 
-export function logs(namespace: string, options?: {fallbackOnProxy?: boolean | string}): Logger {
+export function logs(namespace: string, options?: {fallbackOnProxy?: boolean | string; decoration: string}): Logger {
   const factory = _getFactory();
   return factory
-    ? factory(namespace)
+    ? factory(namespace, {decoration: options?.decoration})
     : options?.fallbackOnProxy
       ? typeof options.fallbackOnProxy == 'boolean'
         ? options.fallbackOnProxy
