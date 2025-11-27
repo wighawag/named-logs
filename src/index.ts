@@ -16,7 +16,7 @@ export type Logger = {
 
 export type TypedLogger<LoggerType extends Logger> = LoggerType;
 
-type LoggerFactory = <LoggerType extends Logger = Logger>(
+export type LoggerFactory = <LoggerType extends Logger = Logger>(
   namespace: string,
   options?: {decoration?: string}
 ) => TypedLogger<LoggerType>;
